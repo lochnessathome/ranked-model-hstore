@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Ranked::Model::HstoreTest < Minitest::Test
+class RankedModelHstoreTest < Minitest::Test
   def test_that_it_has_a_version_number
     refute_nil ::Ranked::Model::Hstore::VERSION
   end
