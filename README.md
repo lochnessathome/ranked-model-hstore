@@ -18,7 +18,13 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Type to add ranking ability to existent model:
+
+    $ rails g ranker Model column
+
+And then run:
+
+    $ rake db:migrate
 
 ## Development
 
