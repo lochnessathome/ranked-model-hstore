@@ -3,7 +3,7 @@ test:
   database: ranked_model_hstore_test
   pool: 10
   timeout: 5000
-  # username:
-  # password:
+  # username: rodney
+  # password: 123456
   # hostname:
-  # port:
+  # port: 
