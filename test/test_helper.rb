@@ -1,5 +1,8 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'ranked/model/hstore'
+
+Dir[File.join(File.dirname(__FILE__), 'support/**/*.rb')].each { |f| require f }
+
+require 'ranked-model-hstore'
 
 require 'minitest/autorun'
 require 'minitest/reporters'
