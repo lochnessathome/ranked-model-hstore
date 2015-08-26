@@ -1,0 +1,5 @@
+Example:
+    rails generate ranker Model column
+
+    This will create:
+        db/migrate/<timestamp>_add_ranker_<column>_to_<model>.rb
