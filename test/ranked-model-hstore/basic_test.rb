@@ -1,11 +1,7 @@
 require 'test_helper'
 
-class RankedModelHstoreTest < Minitest::Test
-  def test_that_it_has_a_version_number
-    refute_nil ::Ranked::Model::Hstore::VERSION
-  end
-
-  def test_it_does_something_useful
-    assert false
+describe 'RankedModelHstore' do
+  it 'gem has a version' do
+    refute_nil ::RankedModelHstore::VERSION
   end
 end

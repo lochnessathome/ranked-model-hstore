@@ -28,6 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest-spec-rails', '~> 5.2.2'
   spec.add_development_dependency 'minitest-reporters', '~> 1.0.20'
   spec.add_development_dependency 'database_cleaner'
+  spec.add_development_dependency 'mocha', '~> 1.1.0'
   spec.add_development_dependency 'pry-rails'
   spec.add_development_dependency 'pry'
 end

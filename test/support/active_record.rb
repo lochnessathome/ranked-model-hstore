@@ -8,10 +8,13 @@ db_config = File.join(root_path, 'test/support/database.yml')
 
 ActiveRecord::Base.logger = Logger.new(log_file)
 ActiveRecord::Base.configurations = YAML::load(IO.read(db_config))
-ActiveRecord::Base.establish_connection('test')
+ActiveRecord::Base.establish_connection(:test)
 
 ActiveRecord::Schema.define :version => 0 do
   create_table :entities, force: true do |t|
     t.string :name
   end
+end
+
+class Entity < ActiveRecord::Base
 end
