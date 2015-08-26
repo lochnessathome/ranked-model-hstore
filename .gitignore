@@ -9,3 +9,4 @@
 /tmp/
 /log/*
 !/log/.keep
+/test/support/database.yml
