@@ -1,10 +1,18 @@
 require 'test_helper'
 
 describe 'Filesystem - positive senario' do
+  let(:options) do
+    object = mock()
+    object.stubs(:model_name).returns('Entity')
+    object.stubs(:table_name).returns('entities')
+    object.stubs(:column_name).returns('row')
+    object
+  end
+
   let(:fs) do
     Filesystem.any_instance.stubs(:clear_dir!).returns(false)
     root_dir = File.expand_path(File.dirname(__FILE__) + '../../../../')
-    fs = Filesystem.new Options.new('Entity', 'row')
+    fs = Filesystem.new(options)
     fs.instance_variable_set(:@root_dir, root_dir)
     fs
   end
@@ -38,23 +46,32 @@ describe 'Filesystem - positive senario' do
   end
 
   it 'should store data' do
-    File.expects(:open).returns(true)
+    File.stubs(:open).returns(true)
     assert_equal fs.store('***'), true
   end
 end
 
+
 describe 'Filesystem - negative senario' do
+  let(:options) do
+    object = mock()
+    object.stubs(:model_name).returns('Entity')
+    object.stubs(:table_name).returns('entities')
+    object.stubs(:column_name).returns('row')
+    object
+  end
+
   let(:fs) do
     Filesystem.any_instance.stubs(:clear_dir!).returns(false)
     root_dir = File.expand_path(File.dirname(__FILE__) + '../../../../')
-    fs = Filesystem.new Options.new('Entity', 'row')
+    fs = Filesystem.new(options)
     fs.instance_variable_set(:@root_dir, root_dir)
     fs
   end
 
   describe 'FS problem' do
     it 'should not store data' do
-      File.expects(:open).raises('Bad happens')
+      File.stubs(:open).raises('Bad happens')
       assert_equal fs.store('***'), false
     end
   end
