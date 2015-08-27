@@ -14,7 +14,19 @@ ActiveRecord::Schema.define :version => 0 do
   create_table :entities, force: true do |t|
     t.string :name
   end
+
+  create_table :ranked_entities, force: true do |t|
+    t.string :name
+    t.integer :row
+  end
 end
 
 class Entity < ActiveRecord::Base
+end
+
+require 'ranked-model-hstore/ranker'
+
+class RankedEntity < ActiveRecord::Base
+  include RankedModelHstore
+  ranks :row
 end
