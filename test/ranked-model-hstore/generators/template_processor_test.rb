@@ -5,7 +5,9 @@ describe 'TemplateProcessor' do
     object = mock()
     object.stubs(:model_name).returns('Entity')
     object.stubs(:table_name).returns('entities')
-    object.stubs(:column_name).returns('row')
+    object.stubs(:collection_name).returns('collection')
+    object.stubs(:positions_column).returns('collections_positions')
+    object.stubs(:ids_column).returns('collections_ids')
     object
   end
 

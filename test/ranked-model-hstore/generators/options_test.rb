@@ -4,7 +4,7 @@ describe 'Options - positive senario' do
   # Model Entity already migrated
 
   let(:options) do
-    Options.new('Entity', 'row')
+    Options.new('Entity', 'collection')
   end
 
   it 'should be' do
@@ -40,7 +40,7 @@ describe 'Options - negative senario' do
 
   describe 'bad model' do
     let(:options) do
-      Options.new('Neverland', 'row')
+      Options.new('Neverland', 'collection')
     end
 
     it 'should be' do
@@ -64,9 +64,9 @@ describe 'Options - negative senario' do
     end
   end
 
-  describe 'column already present' do
+  describe 'columns already present' do
     let(:options) do
-      Options.new('Entity', 'name')
+      Options.new('RankedEntity', 'collection')
     end
 
     it 'should be' do
@@ -82,7 +82,7 @@ describe 'Options - negative senario' do
     end
 
     it 'should return true on #column_exists?' do
-      assert_equal options.send(:column_exists?), true
+      assert_equal options.send(:collection_columns_exists?), true
     end
   end
 end

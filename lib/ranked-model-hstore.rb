@@ -5,7 +5,7 @@ module RankedModelHstore
   # Ruby Fixnum limits
   #
   # MIN_RANK_VALUE = -2305843009213693952
-  # MAX_RANK_VALUE = 2305843009213693952
+  # MAX_RANK_VALUE = 2305843009213693951
 
   # Pg Integer limits
   #

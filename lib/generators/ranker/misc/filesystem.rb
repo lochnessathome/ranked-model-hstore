@@ -1,6 +1,8 @@
 require 'fileutils'
 
 class Filesystem
+  # Serves migration file generation.
+
   ORIGIN = 'migration_origin.rb'
 
   attr_reader :errors
@@ -9,7 +11,7 @@ class Filesystem
     @timestamp = migration_timestamp
     @model_name = options.model_name
     @table_name = options.table_name
-    @column_name = options.column_name
+    @collection_name = options.collection_name
 
     clear_dir!
   end
@@ -27,9 +29,9 @@ class Filesystem
 
   def filename
     # Name of migration file
-    # Instance: 20150827193501_add_ranker_row_to_products.rb
+    # Instance: 20150827193501_add_category_rank_to_products.rb
 
-    @filename ||= "#{@timestamp}_add_ranker_#{@column_name}_to_#{@table_name}.rb"
+    @filename ||= "#{@timestamp}_add_#{@collection_name}_rank_to_#{@table_name}.rb"
   end
 
   def migration_origin
@@ -44,7 +46,7 @@ class Filesystem
 
   def unique?
     # Check that project doesn't use similar file.
-    # E.g. there are NO ~/rails_project/db/migrate/*add_ranker_SAME_COLUMN_to_SAME_TABLE.rb*
+    # E.g. there are NO ~/rails_project/db/migrate/*add_SAME_COLLECTION_rank_to_SAME_TABLE.rb*
 
     files = Dir.glob(File.join(migrate_dir, '*'))
 

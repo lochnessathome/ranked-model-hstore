@@ -13,10 +13,11 @@ class TemplateProcessor
 
     begin
       @source = template
-      @source.gsub!('_description_', options.column_name.camelize)
+      @source.gsub!('_description_', options.collection_name.camelize)
       @source.gsub!('_model_name_', options.table_name.camelize)
       @source.gsub!('_table_name_', options.table_name)
-      @source.gsub!('_column_name_', options.column_name)
+      @source.gsub!('_positions_column_', options.positions_column)
+      @source.gsub!('_ids_column_', options.ids_column)
       true
     rescue
       false

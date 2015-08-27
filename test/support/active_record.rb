@@ -11,13 +11,17 @@ ActiveRecord::Base.configurations = YAML::load(IO.read(db_config))
 ActiveRecord::Base.establish_connection(:test)
 
 ActiveRecord::Schema.define :version => 0 do
+  enable_extension 'hstore'
+  enable_extension 'intarray'
+
   create_table :entities, force: true do |t|
     t.string :name
   end
 
   create_table :ranked_entities, force: true do |t|
-    t.string :name
-    t.integer :row
+    t.string  :name
+    t.integer :collections_ids,        default: [], null: false, array: true
+    t.hstore  :collections_positions,  default: {}, null: false
   end
 end
 
@@ -28,5 +32,5 @@ require 'ranked-model-hstore/ranker'
 
 class RankedEntity < ActiveRecord::Base
   include RankedModelHstore
-  ranks :row
+  ranks :collection
 end

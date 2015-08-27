@@ -10,10 +10,10 @@ class RankerGenerator < Rails::Generators::Base
   source_root File.expand_path('../templates', __FILE__)
 
   argument :model_name, :type => :string
-  argument :column_name, :type => :string, :default => 'row'
+  argument :collection_name, :type => :string, :default => 'category'
 
   def generate_ranker
-    options = Options.new(model_name, column_name)
+    options = Options.new(model_name, collection_name)
     unless options.valid?
       handle_error(options.errors)
     end
@@ -38,7 +38,7 @@ class RankerGenerator < Rails::Generators::Base
 
   def handle_error(errors)
     puts 'Error.'
-    errors.each { |e| puts e }
+    errors.to_a.each { |e| puts e }
     exit!
   end
 end

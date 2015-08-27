@@ -5,7 +5,7 @@ describe 'Filesystem - positive senario' do
     object = mock()
     object.stubs(:model_name).returns('Entity')
     object.stubs(:table_name).returns('entities')
-    object.stubs(:column_name).returns('row')
+    object.stubs(:collection_name).returns('collection')
     object
   end
 
@@ -42,7 +42,7 @@ describe 'Filesystem - positive senario' do
   end
 
   it 'should return filename with known data' do
-    assert_equal fs.filename, "#{fs.send(:migration_timestamp)}_add_ranker_row_to_entities.rb"
+    assert_equal fs.filename, "#{fs.send(:migration_timestamp)}_add_collection_rank_to_entities.rb"
   end
 
   it 'should store data' do
@@ -57,7 +57,7 @@ describe 'Filesystem - negative senario' do
     object = mock()
     object.stubs(:model_name).returns('Entity')
     object.stubs(:table_name).returns('entities')
-    object.stubs(:column_name).returns('row')
+    object.stubs(:collection_name).returns('collection')
     object
   end
 

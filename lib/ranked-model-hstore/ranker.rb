@@ -6,6 +6,7 @@ module RankedModelHstore
     def initialize(name)
       self.name = name.to_sym
       self.column = name
+      # consociation
     end
 
     def with(instance)

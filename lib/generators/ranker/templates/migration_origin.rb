@@ -1,9 +1,16 @@
-class AddRanker_description_To_model_name_ < ActiveRecord::Migration
+class Add_description_RankTo_model_name_ < ActiveRecord::Migration
   def self.up
-    add_column :_table_name_, :_column_name_, :integer
+    enable_extension 'hstore'
+    enable_extension 'intarray'
+
+    add_column :_table_name_, :_positions_column_, :hstore, default: {}, null: false
+    add_column :_table_name_, :_ids_column_, :integer, default: [], null: false, array: true
   end
 
   def self.down
-    remove_column :_table_name_, :_column_name_
+    # Do not drop extensions.
+
+    remove_column :_table_name_, :_positions_column_
+    remove_column :_table_name_, :_ids_column_
   end
 end

@@ -1,5 +1,6 @@
 Example:
-    rails generate ranker Model column
+    rails generate ranker Entity collection
 
     This will create:
-        db/migrate/<timestamp>_add_ranker_<column>_to_<model>.rb
+        1) field `collections_ids` in Entity model;
+        2) field `collections_positions` in Entity model;
