@@ -43,19 +43,39 @@ module RankedModelHstore
 
     private
 
-    def ranks(*args)
+    def ranks(name)
       self.rankers ||= []
-      ranker = RankedModelHstore::Ranker.new(*args)
+      ranker = RankedModelHstore::Ranker.new(name)
       self.rankers << ranker
-      attr_reader "#{ranker.name}_position"
-      define_method "#{ranker.name}_position=" do |position|
-        if position.present?
-          send "#{ranker.column}_will_change!"
-          instance_variable_set "@#{ranker.name}_position", position
+
+      store_accessor ranker.positions_column.to_sym, "#{ranker.positions_column}_hash".to_sym
+
+      define_method "#{ranker.positions_column}_hash" do
+        hash = {}
+        self.send(ranker.positions_column).each_pair do |key, val|
+          hash.merge!({key.to_i => val.to_i})
+        end
+        hash
+      end
+
+      define_method "#{ranker.positions_column}_hash=" do |positions|
+        positions ||= {}
+        hash = {}
+        positions.each_pair do |key, val|
+          hash.merge!({key.to_s => val.to_s})
+        end
+
+        self.send("#{ranker.positions_column}=", hash)
+      end
+
+      define_method "position_in_#{ranker.name}" do |collection_id|
+        if collection_id.present?
+          positions = self.send("#{ranker.positions_column}_hash")
+          positions[collection_id]
         end
       end
 
-      public "#{ranker.name}_position", "#{ranker.name}_position="
+      public "position_in_#{ranker.name}"
     end
 
   end

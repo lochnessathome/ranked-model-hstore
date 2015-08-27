@@ -1,12 +1,12 @@
 module RankedModelHstore
 
   class Ranker
-    attr_accessor :name, :column
+    attr_accessor :name, :positions_column, :ids_column
 
     def initialize(name)
       self.name = name.to_sym
-      self.column = name
-      # consociation
+      self.positions_column = "#{name.to_s.pluralize}_positions"
+      self.ids_column = "#{name.to_s.pluralize}_ids"
     end
 
     def with(instance)
@@ -22,13 +22,23 @@ module RankedModelHstore
       end
 
       def handle_ranking
-        rank_at(rand(RankedModelHstore::MIN_RANK_VALUE..RankedModelHstore::MAX_RANK_VALUE))
+        ids = instance.send(ranker.ids_column)
+        positions = instance.send(ranker.positions_column)
+
+        true
+        # rank_at(rand(RankedModelHstore::MIN_RANK_VALUE..RankedModelHstore::MAX_RANK_VALUE))
       end
+
+      # def position_in_category(category_id)
+      #   # RE-WRITE
+      #   positions = instance.send(ranker.positions_column)
+      #   positions[category_id]
+      # end
 
       private
 
       def rank_at(value)
-        instance.send "#{ranker.column}=", value
+        # instance.send "#{ranker.column}=", value
       end
     end
 
