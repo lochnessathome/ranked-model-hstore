@@ -34,3 +34,20 @@ class RankedEntity < ActiveRecord::Base
   include RankedModelHstore
   ranks :collection
 end
+
+# 
+# require 'pry'
+#
+# sql = "CREATE FUNCTION greenwich_time() RETURNS date AS $$
+#        SELECT DATE(NOW() AT TIME ZONE 'UTC');
+#        $$ LANGUAGE SQL;"
+#
+# binding.pry
+#
+# ActiveRecord::Base.connection.execute sql
+#
+# sql = "SELECT * from users"
+# @result = @connection.connection.execute(sql);
+# @result.each(:as => :hash) do |row|
+#    puts row["email"]
+# end

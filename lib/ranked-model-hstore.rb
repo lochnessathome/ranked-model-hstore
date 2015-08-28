@@ -48,6 +48,9 @@ module RankedModelHstore
       ranker = RankedModelHstore::Ranker.new(name)
       self.rankers << ranker
 
+      # collections_positions_hash is a way to deal with numbers,
+      # when collections_positions provides only strings.
+
       store_accessor ranker.positions_column.to_sym, "#{ranker.positions_column}_hash".to_sym
 
       define_method "#{ranker.positions_column}_hash" do

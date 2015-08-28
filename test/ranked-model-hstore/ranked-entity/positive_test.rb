@@ -33,4 +33,12 @@ describe 'RankedEntity - positive senario' do
     )
     assert_equal entity.position_in_collection(collection_one), position_one
   end
+
+  # it 'should set given rank' do
+  #
+  # end
+  #
+  # it 'should set random rank' do
+  #
+  # end
 end

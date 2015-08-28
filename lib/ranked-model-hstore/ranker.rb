@@ -29,12 +29,6 @@ module RankedModelHstore
         # rank_at(rand(RankedModelHstore::MIN_RANK_VALUE..RankedModelHstore::MAX_RANK_VALUE))
       end
 
-      # def position_in_category(category_id)
-      #   # RE-WRITE
-      #   positions = instance.send(ranker.positions_column)
-      #   positions[category_id]
-      # end
-
       private
 
       def rank_at(value)
