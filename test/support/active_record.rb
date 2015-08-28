@@ -23,6 +23,18 @@ ActiveRecord::Schema.define :version => 0 do
     t.integer :collections_ids,        default: [], null: false, array: true
     t.hstore  :collections_positions,  default: {}, null: false
   end
+
+  # PlSql functions
+  func_latest_position_body = PlSql.func_latest_position(
+    'ranked_entities',
+    'collection',
+    'collections_positions'
+  )["body"]
+
+  execute <<-SQL
+    #{func_latest_position_body}
+  SQL
+
 end
 
 class Entity < ActiveRecord::Base
@@ -35,19 +47,5 @@ class RankedEntity < ActiveRecord::Base
   ranks :collection
 end
 
-# 
 # require 'pry'
-#
-# sql = "CREATE FUNCTION greenwich_time() RETURNS date AS $$
-#        SELECT DATE(NOW() AT TIME ZONE 'UTC');
-#        $$ LANGUAGE SQL;"
-#
 # binding.pry
-#
-# ActiveRecord::Base.connection.execute sql
-#
-# sql = "SELECT * from users"
-# @result = @connection.connection.execute(sql);
-# @result.each(:as => :hash) do |row|
-#    puts row["email"]
-# end

@@ -1,5 +1,6 @@
 require 'ranked-model-hstore/ranker'
 require 'ranked-model-hstore/version'
+require 'ranked-model-hstore/plsql/functions'
 
 module RankedModelHstore
   # Ruby Fixnum limits

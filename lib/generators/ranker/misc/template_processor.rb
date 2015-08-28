@@ -1,3 +1,5 @@
+require_relative 'plsql_function'
+
 class TemplateProcessor
 
   attr_reader :errors, :source
@@ -18,6 +20,9 @@ class TemplateProcessor
       @source.gsub!('_table_name_', options.table_name)
       @source.gsub!('_positions_column_', options.positions_column)
       @source.gsub!('_ids_column_', options.ids_column)
+      func_latest_position = FuncLatestPosition.new(options)
+      @source.gsub!('_func_latest_position_fullname_', func_latest_position.fullname)
+      @source.gsub!('_func_latest_position_body_', func_latest_position.body)
       true
     rescue
       false
