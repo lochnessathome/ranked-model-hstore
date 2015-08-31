@@ -9,6 +9,7 @@ class Add_description_RankTo_model_name_ < ActiveRecord::Migration
     ### PlSql functions
     execute <<-SQL
       _func_latest_position_body_
+      _func_count_items_body_
     SQL
   end
 
@@ -21,6 +22,7 @@ class Add_description_RankTo_model_name_ < ActiveRecord::Migration
     ### PlSql functions
     execute <<-SQL
       drop function _func_latest_position_fullname_;
+      drop function _func_count_items_fullname_;
     SQL
   end
 end

@@ -32,4 +32,32 @@ describe 'PlSql - positive scenario' do
     end
   end
 
+  describe 'func_count_items()' do
+    let(:func_name) { 'count_items_in_collection_at_ranked_entities' }
+
+    it 'should return positions count for existent collection' do
+      entity = RankedEntity.create(
+        collections_ids: collections_ids,
+        collections_positions_hash: collections_positions_hash
+      )
+
+      result = ActiveRecord::Base.connection.execute("select #{func_name}('#{collection_one}');")
+
+      refute_nil result.first
+      assert_equal '1', result.first[func_name].to_s
+    end
+
+    it 'should return zero for non-existent collection' do
+      entity = RankedEntity.create(
+        collections_ids: collections_ids,
+        collections_positions_hash: collections_positions_hash
+      )
+
+      result = ActiveRecord::Base.connection.execute("select #{func_name}('#{collection_one + 1}');")
+
+      refute_nil result.first
+      assert_equal '0', result.first[func_name].to_s
+    end
+  end
+
 end

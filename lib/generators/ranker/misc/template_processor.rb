@@ -23,6 +23,9 @@ class TemplateProcessor
       func_latest_position = FuncLatestPosition.new(options)
       @source.gsub!('_func_latest_position_fullname_', func_latest_position.fullname)
       @source.gsub!('_func_latest_position_body_', func_latest_position.body)
+      func_count_items = FuncCountItems.new(options)
+      @source.gsub!('_func_count_items_fullname_', func_count_items.fullname)
+      @source.gsub!('_func_count_items_body_', func_count_items.body)
       true
     rescue
       false

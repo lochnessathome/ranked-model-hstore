@@ -34,3 +34,9 @@ class FuncLatestPosition < PlSqlFunction
     super('func_latest_position', options.table_name, options.collection_name, options.positions_column)
   end
 end
+
+class FuncCountItems < PlSqlFunction
+  def initialize(options)
+    super('func_count_items', options.table_name, options.collection_name, options.positions_column)
+  end
+end

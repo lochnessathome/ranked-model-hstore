@@ -31,8 +31,15 @@ ActiveRecord::Schema.define :version => 0 do
     'collections_positions'
   )["body"]
 
+  func_count_items_body = PlSql.func_count_items(
+    'ranked_entities',
+    'collection',
+    'collections_positions'
+  )["body"]
+
   execute <<-SQL
     #{func_latest_position_body}
+    #{func_count_items_body}
   SQL
 
 end
