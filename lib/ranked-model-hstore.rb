@@ -3,17 +3,6 @@ require 'ranked-model-hstore/version'
 require 'ranked-model-hstore/plsql/functions'
 
 module RankedModelHstore
-  # Ruby Fixnum limits
-  #
-  # MIN_RANK_VALUE = -2305843009213693952
-  # MAX_RANK_VALUE = 2305843009213693951
-
-  # Pg Integer limits
-  #
-  MIN_RANK_VALUE = -2147483648
-  MAX_RANK_VALUE = 2147483647
-
-
   def self.included base
     base.class_eval do
       class_attribute :rankers
@@ -57,7 +46,12 @@ module RankedModelHstore
       define_method "#{ranker.positions_column}_hash" do
         hash = {}
         self.send(ranker.positions_column).each_pair do |key, val|
-          hash.merge!({key.to_i => val.to_i})
+          result = if val == 'NULL'
+            {key.to_i => nil}
+          else
+            {key.to_i => val.to_i}
+          end
+          hash.merge!(result)
         end
         hash
       end
@@ -66,7 +60,12 @@ module RankedModelHstore
         positions ||= {}
         hash = {}
         positions.each_pair do |key, val|
-          hash.merge!({key.to_s => val.to_s})
+          result = if val.kind_of?(NilClass)
+            {key.to_s => 'NULL'}
+          else
+            {key.to_s => val.to_s}
+          end
+          hash.merge!(result)
         end
 
         self.send("#{ranker.positions_column}=", hash)

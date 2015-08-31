@@ -60,4 +60,30 @@ describe 'PlSql - positive scenario' do
     end
   end
 
+  describe 'func_generate_sequence()' do
+    let(:func_name) { 'generate_sequence_for_collection_at_ranked_entities' }
+    let(:collection_three) { 3 }
+    let(:sequence_one) { 'collection_1_at_ranked_entities_seq' }
+    let(:sequence_three) { 'collection_3_at_ranked_entities_seq' }
+
+    it 'should create sequence for collection' do
+      result_one = ActiveRecord::Base.connection.execute("select #{func_name}('#{collection_one}');")
+      result_three = ActiveRecord::Base.connection.execute("select #{func_name}('#{collection_three}');")
+
+      refute_nil result_one.first
+      refute_nil result_three.first
+
+      assert_equal sequence_one, result_one.first[func_name].to_s
+      assert_equal sequence_three, result_three.first[func_name].to_s
+    end
+
+    it 'should return increasing nextval()' do
+      ActiveRecord::Base.connection.execute("select #{func_name}('#{collection_one}');")
+
+      step_one = ActiveRecord::Base.connection.execute("select nextval('#{sequence_one}');")
+      step_two = ActiveRecord::Base.connection.execute("select nextval('#{sequence_one}');")
+
+      assert_operator step_one.first["nextval"].to_i, :<, step_two.first["nextval"].to_i
+    end
+  end
 end

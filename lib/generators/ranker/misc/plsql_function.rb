@@ -40,3 +40,15 @@ class FuncCountItems < PlSqlFunction
     super('func_count_items', options.table_name, options.collection_name, options.positions_column)
   end
 end
+
+class FuncGenerateSequence < PlSqlFunction
+  def initialize(options)
+    super('func_generate_sequence', options.table_name, options.collection_name, options.positions_column)
+  end
+end
+
+class FuncGeneratePosition < PlSqlFunction
+  def initialize(options)
+    super('func_generate_position', options.table_name, options.collection_name, options.positions_column)
+  end
+end
