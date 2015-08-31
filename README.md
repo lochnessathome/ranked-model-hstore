@@ -20,7 +20,7 @@ Or install it yourself as:
 
 Type to add ranking ability to existent model:
 
-    $ rails g ranker Model column
+    $ rails g ranker Model collection
 
 And then run:
 

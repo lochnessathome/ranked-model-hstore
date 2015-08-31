@@ -15,6 +15,10 @@ describe 'PlSqlFunction - positive senario' do
       refute_nil FuncLatestPosition.new(options)
     end
 
+    it 'should raise with invalid options' do
+      assert_raises(NoMethodError) { FuncLatestPosition.new({}) }
+    end
+
     it 'should get body, name and fullname with valid options' do
       function = FuncLatestPosition.new(options)
       refute_empty function.body
@@ -22,8 +26,17 @@ describe 'PlSqlFunction - positive senario' do
       refute_empty function.fullname
     end
 
-    it 'should raise with invalid options' do
-      assert_raises(NoMethodError) { FuncLatestPosition.new({}) }
+    it 'should be equal to PlSql#func_latest_position' do
+      plsql = PlSql.func_latest_position(
+        options.table_name,
+        options.collection_name,
+        options.positions_column
+      )
+      function = FuncLatestPosition.new(options)
+
+      assert_equal function.body, plsql["body"]
+      assert_equal function.fullname, plsql["fullname"]
+      assert_equal function.name, plsql["name"]
     end
   end
 
