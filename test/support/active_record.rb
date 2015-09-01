@@ -43,10 +43,17 @@ ActiveRecord::Schema.define :version => 0 do
     'collections_positions'
   )["body"]
 
+  func_generate_position_body = PlSql.func_generate_position(
+    'ranked_entities',
+    'collection',
+    'collections_positions'
+  )["body"]
+
   execute <<-SQL
     #{func_latest_position_body}
     #{func_count_items_body}
     #{func_generate_sequence_body}
+    #{func_generate_position_body}
   SQL
 
 end

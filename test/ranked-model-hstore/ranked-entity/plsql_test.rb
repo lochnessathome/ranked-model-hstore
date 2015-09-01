@@ -86,4 +86,47 @@ describe 'PlSql - positive scenario' do
       assert_operator step_one.first["nextval"].to_i, :<, step_two.first["nextval"].to_i
     end
   end
+
+  describe 'func_generate_position()' do
+    let(:func_name) { 'generate_position_in_collection_at_ranked_entities' }
+    let(:func_seq_name) { 'generate_sequence_for_collection_at_ranked_entities' }
+    let(:collection_four) { 4 }
+    let(:collection_five) { 5 }
+    let(:sequence_four) { 'collection_4_at_ranked_entities_seq' }
+    let(:sequence_five) { 'collection_5_at_ranked_entities_seq' }
+
+    it 'should replace NULL with a number' do
+      ActiveRecord::Base.connection.execute("select #{func_seq_name}('#{collection_four}');")
+
+      entity = RankedEntity.new(
+        collections_ids: [collection_four],
+        collections_positions_hash: {collection_four => nil}
+      )
+      entity.save
+      entity.reload
+
+      refute_nil entity.collections_positions_hash[collection_four]
+    end
+
+    it 'should get separate counters for different collections' do
+      ActiveRecord::Base.connection.execute("select #{func_seq_name}('#{collection_four}');")
+      ActiveRecord::Base.connection.execute("select #{func_seq_name}('#{collection_five}');")
+
+      entity_four = RankedEntity.new(
+        collections_ids: [collection_four, collection_five],
+        collections_positions_hash: {collection_four => nil, collection_five => nil}
+      )
+      entity_four.save
+      entity_four.reload
+
+      entity_five = RankedEntity.new(
+        collections_ids: [collection_five],
+        collections_positions_hash: {collection_five => nil}
+      )
+      entity_five.save
+      entity_five.reload
+
+      refute_equal entity_four.collections_positions_hash[collection_five], entity_five.collections_positions_hash[collection_five]
+    end
+  end
 end

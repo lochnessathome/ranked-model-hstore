@@ -78,6 +78,20 @@ describe 'PlSqlFunction - positive senario' do
     end
   end
 
+  describe 'FuncGenerateSequence' do
+    let(:options) do
+      object = mock()
+      object.stubs(:table_name).returns('entities')
+      object.stubs(:collection_name).returns('collection')
+      object.stubs(:positions_column).returns('collections_positions')
+      object
+    end
+
+    it 'should get function hash with valid options' do
+      refute_nil FuncGenerateSequence.new(options)
+    end
+  end
+
   describe 'FuncGeneratePosition' do
     let(:options) do
       object = mock()
@@ -87,9 +101,9 @@ describe 'PlSqlFunction - positive senario' do
       object
     end
 
-    # it 'should get function hash with valid options' do
-    #   refute_nil FuncGeneratePosition.new(options)
-    # end
+    it 'should get function hash with valid options' do
+      refute_nil FuncGeneratePosition.new(options)
+    end
   end
 
 end
